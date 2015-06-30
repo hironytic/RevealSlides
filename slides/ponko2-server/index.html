@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Heroku+MongoLabでダミーサーバー</title>
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="../../css/reveal.css">
+		<link rel="stylesheet" href="../../css/theme/hiron_black.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="../../lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../../css/print/pdf.css' : '../../css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1><small>Heroku + MongoLabで</small><br />ダミーサーバー</h1>
+					<p>@hironytic</p>
+				</section>
+				
+				<section>
+					<h2>自己紹介</h2>
+					<p><img src="MeDog.png" width="128" height="128"></p>
+					<p>ひろん / 一宮 浩教</p>
+					<ul>
+						<li>GitHub: <a href="https://github.com/hironytic">hironytic</a>
+						<li>Twitter: <a href="http://www.twitter.com/hironytic">@hironytic</a></li>
+						<li>おしごとでiOSアプリ作ってます。</li>
+						<li>最近のサーバー事情を知りません。</li>
+					</ul>
+				</section>
+				
+				<section>
+					<h2>ことの発端</h2>
+					<p>ある日、突然、やってきたおしごと</p>
+ 					<ul>
+						<li>自社サーバーのWeb API（3つ）を<br />呼び出して動作する機能</li>
+						<li>スケジュール厳しい<br />→ アプリ側の実装をすぐに開始</li>
+						<li>API仕様は決まってる<span class="fragment" data-fragment-index="2">かも？</span><br /><span class="fragment highlight-red" data-fragment-index="1">→ サーバーはまだ立ってない</span></li>
+					</ul>
+				</section>	
+				
+				<section>
+					<h2>仕様</h2>
+					<ul>
+						<li>Web API</li>
+						<ul>
+							<li>REST的なもの</li>
+							<li>結果はJSONで返す</li>
+						</ul>
+						<li>モバイルアプリ</li>
+						<ul>
+							<li>順次Web APIを呼び出す</li>
+							<li>Web APIの戻した結果よって<br />次の呼び出しの挙動が変わる</li>
+						</ul>
+					</ul>
+				</section>
+				
+				<section>
+					<p>何か返してくれるサーバーが欲しい</p>
+				</section>
+				
+				<section>
+					<h2>Heroku</h2>
+					<ul>
+						<li><a href="http://www.heroku.com/">http://www.heroku.com/</a></li>
+						<li>PaaS（クラウドサービスのホスティング）</li>
+						<li>Gitでデプロイ</li>
+						<li>dynoでスケールアウト</li>
+						<ul>
+							<li>dyno = 軽量Linuxコンテナ</li>
+							<li>dynoを動かした時間（dyno-hour）で課金</li>
+							<li>1アプリごとに1ヶ月につき<br />750 dyno-hoursが無料でもらえる</li>
+							<li>1X dyno 1個を動かすだけなら<span class="fragment highlight-green grow">無料</span></li>
+						</ul>
+					</ul>
+				</section>
+				
+				<section>
+					<h2>MongoLab</h2>
+					<ul>
+						<li><a href="https://mongolab.com/">https://mongolab.com/</a></li>
+						<li>Mongo DBデータベースのホスティング</li>
+						<ul>
+							<li>NoSQL</li>
+							<li>JSONライクなデータ構造</li>
+							<li>MongoLabはWeb UIでデータ操作可能</li>
+						</ul>
+						<li>Heroku Add-onで連携</li>
+						<li>Sandboxプラン（500MBまで）なら<span class="fragment highlight-green grow">無料</span></li>
+					</ul>
+				</section>
+				
+				<section>
+					<h2>ダミーサーバー</h2>
+					<ul>
+						<li>入力パラメータ</li>
+						<ul>
+							<li>アプリが送ったものがとにかく見えればそれでいい</li>
+							<ul class="fragment">
+								<li>サーバーログ出力で十分</li>
+								<li><code>heroku logs -t</code></li>
+							</ul>
+						</ul>
+						<li>結果データ</li>
+						<ul>
+							<li>API名（パス）ごとに決め打ちのJSONデータ</li>
+							<li>挙動を変えたいので、決め打ちのデータを手動で変更したい。</li>
+							<ul class="fragment">
+								<li>MongoDBならJSONデータ楽勝</li>
+								<li>MongoLabならWeb UIでデータ変更可能</li>
+							</ul>
+						</ul>
+				</section>
+				
+				<section>
+					<section>
+						<h2>作ってみた</h2>
+						<ul>
+							<li>フレームワークにSinatraを利用</li>
+							<li>ソース</li>
+							<ul>
+								<li><a href="https://github.com/hironytic/ponko2-server">https://github.com/hironytic/ponko2-server</a></li>
+							</ul>
+							<li>ポンコツですが、ご自由にどうぞ</li>
+						</ul>
+					</section>
+					
+					<section>
+						<h2>デモ</h2>
+						<img src="demo_screenshot.png" />
+					</section>
+				</section>
+				
+				<section>
+					<h2>まとめ</h2>
+					<ul>
+						<li>Heroku + MongoLabでダミーサーバーを立ててみた</li>
+						<li class="fragment">他にもっといい方法あるんじゃない？</li>
+						<ul class="fragment">
+							<li>情報お待ちしております( ´ ▽ ` )ﾉ</li>
+						</ul>
+					</ul>
+				</section>
+				
+			</div>
+
+		</div>
+
+		<script src="../../lib/js/head.min.js"></script>
+		<script src="../../js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: '../../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../../plugin/zoom-js/zoom.js', async: true },
+					{ src: '../../plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
