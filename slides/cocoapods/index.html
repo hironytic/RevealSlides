@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="ja">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>CocoaPods</title>
+
+    <meta name="author" content="Hironori Ichimiya">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="../../css/reveal.css">
+    <link rel="stylesheet" href="../../css/theme/hiron_black.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="../../lib/css/tomorrow-night.css">
+
+    <style type="text/css">
+      pre.filetree {
+        background: #1d1f21;
+        padding: 5px;
+      }
+      pre.filetree span.eyecatch {
+        color: #f0c674;
+      }
+    </style>
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../../css/print/pdf.css' : '../../css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="../../lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section>
+          <h1>タイトル</h1>
+          <h3>サブタイトル</h3>
+          <p>@hironytic</p>
+        </section>
+
+        <section data-markdown><script type="text/template">
+          ### CocoaPods
+
+          https://cocoapods.org/
+
+          - Objective-C/Swiftライブラリの依存管理
+          - RubyでいうところのGem + Bundler
+          - Node.jsでいうところのnpm
+        </script></section>
+
+        <section data-markdown><script type="text/template">
+          ### はじめよう
+
+          インストール
+
+          ```sh
+          $ sudo gem install cocoapods
+          ```
+          ↓
+
+          セットアップ
+
+          ```sh
+          $ pod setup
+          ```
+          <small>※ 実のところ、この辺のことは覚えてません‥‥</small>
+        </script></section>
+
+        <section data-markdown><script type="text/template">
+          ## 使い方
+
+          （Objective-C）
+        </script></section>
+
+        <section data-markdown><script type="text/template">
+          ライブラリを使いたいプロジェクトに<br>
+          カレントフォルダを移す。
+
+          <pre class="filetree">
+          HogeFuga/         <span class="eyecatch">← ここ</span>
+            ├ HogeFuga/
+            │  ├ AppDelegate.h
+            │  ├ AppDelegate.m
+            │  │  :
+            ├ HogeFugaTests/
+            │  ├ HogeFugaTests.m
+            │  │  :
+            └ HogeFuga.xcodeproj
+          </pre>
+
+          ```sh
+          $ cd path/to/HogeFuga
+          ```
+        </script></section>
+
+        <section data-markdown><script type="text/template">
+          ### Podfileの作成
+
+          ```sh
+          $ pod init
+          ```
+
+          ↓
+
+          <pre class="filetree">
+          HogeFuga/
+            ├ HogeFuga/
+            │  ├ AppDelegate.h
+            │  ├ AppDelegate.m
+            │  │  :
+            ├ HogeFugaTests/
+            │  ├ HogeFugaTests.m
+            │  │  :
+            ├ HogeFuga.xcodeproj
+            └ Podfile  <span class="eyecatch">← これができる</span>
+          </pre>
+        </script></section>
+
+        <section>
+          <section data-transition="fade" data-markdown><script type="text/template">
+            ### Podfile
+
+            こんなのができてる。
+
+            ```ruby
+              # Uncomment this line to define a global platform for your project
+              # platform :ios, '6.0'
+
+              target 'HogeFuga' do
+
+              end
+
+              target 'HogeFugaTests' do
+
+              end
+            ```
+          </script></section>
+          <section data-transition="fade" data-markdown><script type="text/template">
+            ### Podfile
+
+            使いたいライブラリを記述する。
+
+            ```ruby
+              # Uncomment this line to define a global platform for your project
+              platform :ios, '8.0'
+
+              target 'HogeFuga' do
+                pod 'BFTaskPromise', '~> 2.0'
+              end
+
+              target 'HogeFugaTests' do
+
+              end
+            ```
+          </script></section>
+        </section>
+
+        <section data-markdown><script type="text/template">
+          #### メモ：バージョンの指定
+
+          指定         | 意味
+          -------------|----------------------
+          `'1.3'`      | 1.3
+          `'> 1.3'`    | 1.3より上（1.3は含まない）
+          `'>= 1.3'`   | 1.3以上（1.3を含む）
+          `'< 1.3'`    | 1.3未満（1.3は含まない）
+          `'<= 1.3'`   | 1.3以下（1.3を含む）
+          `'~> 1.3.2'` | 1.3.2 <= ver < 1.4（いい感じに）
+          `'~> 1.3'`   | 1.3 <= ver < 2.0（いい感じに）
+        </script></section>
+
+        <section data-markdown><script type="text/template">
+          ### ライブラリのインストール
+
+          ```sh
+          $ pod install
+          ```
+
+          ↓
+
+          <pre class="filetree">
+          HogeFuga/
+            ├ HogeFuga/
+            │  ├ AppDelegate.h
+            │  ├ AppDelegate.m
+            │  │  :
+            ├ HogeFugaTests/
+            │  ├ HogeFugaTests.m
+            │  │  :
+            ├ HogeFuga.xcodeproj
+            ├ HogeFuga.xcworkspace  <span class="eyecatch">← 増えた</span>
+            ├ Podfile
+            ├ Podfile.lock   <span class="eyecatch">← 増えた</span>
+            └ Pods/   <span class="eyecatch">← 増えた</span>
+          </pre>
+        </script></section>
+
+        <section data-markdown><script type="text/template">
+          ### ライブラリを使った開発
+
+          以後は*.xcworkspaceの方をXcodeで開く。
+
+          <pre class="filetree">
+          HogeFuga/
+          │  :
+          ├ HogeFuga.xcodeproj
+          ├ HogeFuga.xcworkspace  <span class="eyecatch">← こっち</span>
+          │  :
+          </pre>
+
+          - ライブラリへのヘッダパス
+          - ライブラリのコンパイル・リンク
+
+          そのまま `#import` してビルドするだけ。
+        </script></section>
+
+        <section data-markdown><script type="text/template">
+          ### 使いたいライブラリが増えた
+
+          Podfileを修正。
+
+          ```ruby
+            # Uncomment this line to define a global platform for your project
+            platform :ios, '8.0'
+
+            target 'HogeFuga' do
+              pod 'BFTaskPromise', '~> 2.0'
+              pod 'Realm'
+            end
+
+            target 'HogeFugaTests' do
+              pod 'Realm/Headers'
+            end
+          ```
+
+          ↓
+
+          ```sh
+          $ pod install
+          ```
+        </script></section>
+
+        <section data-markdown><script type="text/template">
+          ### Podfile.lock
+
+          ```yaml
+            PODS:
+              - BFTaskPromise (2.1.0):
+                - Bolts/Tasks (~> 1.2)
+              - Bolts/Tasks (1.2.0)
+              - Realm (0.93.2):
+                - Realm/Headers (= 0.93.2)
+              - Realm/Headers (0.93.2)
+
+            DEPENDENCIES:
+              - BFTaskPromise (~> 2.0)
+              - Realm
+              - Realm/Headers
+
+            SPEC CHECKSUMS:
+              BFTaskPromise: 25007577307dcd4dc657a143ac6a63f3356652c2
+              Bolts: d176cb1e0012175589e389a9db49b85e27787576
+              Realm: 2fdd0ae74f730e190384e0338d8a0d3654df8220
+
+            COCOAPODS: 0.37.2
+          ```
+        </script></section>
+
+        <section data-markdown><script type="text/template">
+          ### Podfile.lock
+
+          - インストールされたライブラリのバージョンが書かれている。
+          - `pod install` しても、ライブラリのバージョンが勝手に上がったりはしない。
+            - 更新したければ？
+              ```sh
+                $ pod update [POD_NAMES ...]
+              ```
+          - Podfile.lockはソース管理（git）に追加しよう！
+        </script></section>
+
+        <section data-markdown><script type="text/template">
+          ### Pods
+
+          取得してきたライブラリと<br>
+          それをビルドするプロジェクト
+
+          <pre class="filetree">
+          HogeFuga/
+          │  :
+          └ Pods/
+             ├ BFTaskPromise/
+             ├ Bolts/
+             ├ Headers/
+             ├ Local Podspecs/
+             ├ Realm/
+             ├ Target Supported Files/
+             ├ Manifest.lock
+             └ Pods.xcodeproj
+          </pre>
+
+          ソース管理に追加するか、除外（.gitignore）するか？<br>
+          → CocoaPods公式サイトは追加を推奨。
+        </script></section>
+
+        <section data-markdown><script type="text/template">
+          ### Pods
+
+          公式サイトのドキュメントの要約
+
+          - 追加するメリット
+            - チェックアウト後の `pod install` が不要
+            - Podソース（GitHub）がダウンしていてもOK
+            - ライブラリが確実に同一だと保証できる
+          - 除外するメリット
+            - リポジトリを小さくできる
+            - 通常は、Podソースが生きている限り、同じものがインストールされるはず
+            - Podのバージョンが異なるブランチのマージでコンフリクトが発生しない
+        </script></section>
+
+      </div>
+
+    </div>
+
+    <script src="../../lib/js/head.min.js"></script>
+    <script src="../../js/reveal.js"></script>
+
+    <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: '../../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: '../../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: '../../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: '../../plugin/highlight/highlight.js', async: true, condition: function() { return true || !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: '../../plugin/zoom-js/zoom.js', async: true },
+          { src: '../../plugin/notes/notes.js', async: true }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>
