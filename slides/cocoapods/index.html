@@ -21,12 +21,28 @@
 
     <style type="text/css">
       pre.filetree {
-        background: #1d1f21;
+        background: #3F3F3F;
         padding: 5px;
       }
       pre.filetree span.eyecatch {
         color: #f0c674;
       }
+    </style>
+
+    <style type="text/css">
+      p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.5px Menlo; color: #c4c7c4; background-color: #27292c}
+      p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.5px Menlo; color: #c4c7c4; background-color: #27292c; min-height: 14.0px}
+      p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.5px Menlo; color: #7ea1b7; background-color: #27292c}
+      p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.5px Menlo; color: #b490b9; background-color: #27292c}
+      p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.5px Menlo; color: #bfc376; background-color: #27292c}
+      p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.5px Menlo; color: #f8c775; background-color: #27292c}
+      span.s1 {font-variant-ligatures: no-common-ligatures; color: #f8c775}
+      span.s2 {font-variant-ligatures: no-common-ligatures}
+      span.s3 {font-variant-ligatures: no-common-ligatures; color: #7ea1b7}
+      span.s4 {font-variant-ligatures: no-common-ligatures; color: #c4c7c4}
+      span.s5 {text-decoration: underline ; font-variant-ligatures: no-common-ligatures}
+      span.s6 {font-variant-ligatures: no-common-ligatures; color: #bfc376}
+      span.s7 {font-variant-ligatures: no-common-ligatures; color: #b490b9}
     </style>
 
     <!-- Printing and PDF exports -->
@@ -50,8 +66,9 @@
       <!-- Any section element inside of this container is displayed as a slide -->
       <div class="slides">
         <section>
-          <h1>タイトル</h1>
-          <h3>サブタイトル</h3>
+          <h1>CocoaPodsのはなし</h1>
+          <small>※ ただしObjective-Cに限る</small>
+          <p><img src="MeDog.png" width="128" height="128"></p>
           <p>@hironytic</p>
         </section>
 
@@ -61,12 +78,12 @@
           https://cocoapods.org/
 
           - Objective-C/Swiftライブラリの依存管理
-          - RubyでいうところのGem + Bundler
+          - RubyでいうところのRubyGems + Bundler
           - Node.jsでいうところのnpm
         </script></section>
 
         <section data-markdown><script type="text/template">
-          ### はじめよう
+          ### Gettig Started - はじめよう
 
           インストール
 
@@ -80,17 +97,15 @@
           ```sh
           $ pod setup
           ```
-          <small>※ 実のところ、この辺のことは覚えてません‥‥</small>
+          <small class="fragment">※ 実のところ、この辺のことは覚えてません‥‥</small>
         </script></section>
 
         <section data-markdown><script type="text/template">
           ## 使い方
-
-          （Objective-C）
         </script></section>
 
         <section data-markdown><script type="text/template">
-          ライブラリを使いたいプロジェクトに<br>
+          Pod（ライブラリ）を必要とするプロジェクトに<br>
           カレントフォルダを移す。
 
           <pre class="filetree">
@@ -140,34 +155,34 @@
             こんなのができてる。
 
             ```ruby
-              # Uncomment this line to define a global platform for your project
-              # platform :ios, '6.0'
+            # Uncomment this line to define a global platform for your project
+            # platform :ios, '6.0'
 
-              target 'HogeFuga' do
+            target 'HogeFuga' do
 
-              end
+            end
 
-              target 'HogeFugaTests' do
+            target 'HogeFugaTests' do
 
-              end
+            end
             ```
           </script></section>
           <section data-transition="fade" data-markdown><script type="text/template">
             ### Podfile
 
-            使いたいライブラリを記述する。
+            使いたいPodを記述する。
 
             ```ruby
-              # Uncomment this line to define a global platform for your project
-              platform :ios, '8.0'
+            # Uncomment this line to define a global platform for your project
+            platform :ios, '8.0'
 
-              target 'HogeFuga' do
-                pod 'BFTaskPromise', '~> 2.0'
-              end
+            target 'HogeFuga' do
+              pod 'BFTaskPromise', '~> 2.0'
+            end
 
-              target 'HogeFugaTests' do
+            target 'HogeFugaTests' do
 
-              end
+            end
             ```
           </script></section>
         </section>
@@ -187,7 +202,7 @@
         </script></section>
 
         <section data-markdown><script type="text/template">
-          ### ライブラリのインストール
+          ### Podのインストール
 
           ```sh
           $ pod install
@@ -213,7 +228,7 @@
         </script></section>
 
         <section data-markdown><script type="text/template">
-          ### ライブラリを使った開発
+          ### Podを使った開発
 
           以後は*.xcworkspaceの方をXcodeで開く。
 
@@ -232,22 +247,22 @@
         </script></section>
 
         <section data-markdown><script type="text/template">
-          ### 使いたいライブラリが増えた
+          ### 使いたいPodが増えた
 
           Podfileを修正。
 
           ```ruby
-            # Uncomment this line to define a global platform for your project
-            platform :ios, '8.0'
+          # Uncomment this line to define a global platform for your project
+          platform :ios, '8.0'
 
-            target 'HogeFuga' do
-              pod 'BFTaskPromise', '~> 2.0'
-              pod 'Realm'
-            end
+          target 'HogeFuga' do
+            pod 'BFTaskPromise', '~> 2.0'
+            pod 'Realm'
+          end
 
-            target 'HogeFugaTests' do
-              pod 'Realm/Headers'
-            end
+          target 'HogeFugaTests' do
+            pod 'Realm/Headers'
+          end
           ```
 
           ↓
@@ -261,32 +276,32 @@
           ### Podfile.lock
 
           ```yaml
-            PODS:
-              - BFTaskPromise (2.1.0):
-                - Bolts/Tasks (~> 1.2)
-              - Bolts/Tasks (1.2.0)
-              - Realm (0.93.2):
-                - Realm/Headers (= 0.93.2)
-              - Realm/Headers (0.93.2)
+          PODS:
+            - BFTaskPromise (2.1.0):
+              - Bolts/Tasks (~> 1.2)
+            - Bolts/Tasks (1.2.0)
+            - Realm (0.93.2):
+              - Realm/Headers (= 0.93.2)
+            - Realm/Headers (0.93.2)
 
-            DEPENDENCIES:
-              - BFTaskPromise (~> 2.0)
-              - Realm
-              - Realm/Headers
+          DEPENDENCIES:
+            - BFTaskPromise (~> 2.0)
+            - Realm
+            - Realm/Headers
 
-            SPEC CHECKSUMS:
-              BFTaskPromise: 25007577307dcd4dc657a143ac6a63f3356652c2
-              Bolts: d176cb1e0012175589e389a9db49b85e27787576
-              Realm: 2fdd0ae74f730e190384e0338d8a0d3654df8220
+          SPEC CHECKSUMS:
+            BFTaskPromise: 25007577307dcd4dc657a143ac6a63f3356652c2
+            Bolts: d176cb1e0012175589e389a9db49b85e27787576
+            Realm: 2fdd0ae74f730e190384e0338d8a0d3654df8220
 
-            COCOAPODS: 0.37.2
+          COCOAPODS: 0.37.2
           ```
         </script></section>
 
         <section data-markdown><script type="text/template">
           ### Podfile.lock
 
-          - インストールされたライブラリのバージョンが書かれている。
+          - インストールされたPodのバージョンが書かれている。
           - `pod install` しても、ライブラリのバージョンが勝手に上がったりはしない。
             - 更新したければ？
               ```sh
@@ -298,7 +313,7 @@
         <section data-markdown><script type="text/template">
           ### Pods
 
-          取得してきたライブラリと<br>
+          インストールしたPodのソースファイル等と<br>
           それをビルドするプロジェクト
 
           <pre class="filetree">
@@ -326,16 +341,289 @@
 
           - 追加するメリット
             - チェックアウト後の `pod install` が不要
-            - Podソース（GitHub）がダウンしていてもOK
-            - ライブラリが確実に同一だと保証できる
+            - Podの取得元（GitHub）がダウンしていてもOK
+            - Podが確実に同一だと保証できる
           - 除外するメリット
             - リポジトリを小さくできる
-            - 通常は、Podソースが生きている限り、同じものがインストールされるはず
-            - Podのバージョンが異なるブランチのマージでコンフリクトが発生しない
+            - 通常は、Podの取得元が生きている限り、同じものがインストールされるはず
+            - 使っているPodのバージョンが異なるブランチ間でのマージがやりやすい
         </script></section>
 
-      </div>
+        <section data-markdown><script type="text/template">
+          ## Pod（ライブラリ）の作り方
+        </script></section>
 
+        <section data-markdown><script type="text/template">
+          ‥‥その前に
+        </script></section>
+
+        <section data-markdown><script type="text/template">
+          ## CocoaPods Trunk
+
+          認証とPodリリースのためのAPI
+
+          デバイス毎に「セッション」を登録。<br>
+          次のように一度だけ実行。
+
+          ```sh
+          $ pod trunk register mailaddr@example.com 'Your Name' --description='macbook air'
+          ```
+
+          cocoapods.orgからメールが届くので、<br>
+          そのメールのリンクをクリック。
+
+          登録済みセッションの一覧を見るには
+
+          ```sh
+          $ pod trunk me
+          ```
+        </script></section>
+
+        <section data-markdown><script type="text/template">
+          ## Pod（ライブラリ）の作り方
+        </script></section>
+
+        <section data-markdown><script type="text/template">
+          ### 必要なもの
+
+          - Podに含めるソース、ライブラリ
+          - *.podspecファイル
+          - LICENSEファイル
+        </script></section>
+
+        <section data-markdown><script type="text/template">
+          ### テンプレートから作成
+
+          質問に答えていくと、Podの種を作ってくれる。
+
+          ```sh
+          $ pod lib create [pod name]
+          ```
+
+          <small class="fragment">↓ 実は初めて実行してみた😓</small>
+
+          <div class="fragment" style="width:90%; margin:20px auto; max-height:400px; overflow:auto; text-align:left;">
+            <p class="p1"><span class="s3">$</span><span class="s2"> pod lib create Piyo</span></p>
+            <p class="p1"><span class="s2">Cloning `https://github.com/CocoaPods/pod-template.git` into `Piyo`.</span></p>
+            <p class="p1"><span class="s2">Configuring Piyo template.</span></p>
+            <p class="p2"><span class="s2"></span><br></p>
+            <p class="p1"><span class="s2">------------------------------</span></p>
+            <p class="p2"><span class="s2"></span><br></p>
+            <p class="p1"><span class="s2">To get you started we need to ask a few questions, this should only take a minute.</span></p>
+            <p class="p2"><span class="s2"></span><br></p>
+            <p class="p1"><span class="s2">2015-07-04 21:25:09.912 defaults[82243:2285211]<span class="Apple-converted-space"> </span></span></p>
+            <p class="p1"><span class="s2">The domain/default pair of (org.cocoapods.pod-template, HasRunbefore) does not exist</span></p>
+            <p class="p1"><span class="s2">If this is your first time we recommend running through with the guide:<span class="Apple-converted-space"> </span></span></p>
+            <p class="p3"><span class="s4"><span class="Apple-converted-space"> </span>- </span><span class="s5">http://guides.cocoapods.org/making/using-pod-lib-create.html</span></p>
+            <p class="p4"><span class="s2"><span class="Apple-converted-space"> </span>( hold cmd and double click links to open in a browser. )</span></p>
+            <p class="p2"><span class="s2"></span><br></p>
+            <p class="p1"><span class="s2"><span class="Apple-converted-space"> </span>Press return to continue.</span></p>
+            <p class="p2"><span class="s2"></span><br></p>
+            <p class="p2"><span class="s2"></span><br></p>
+            <p class="p1"><span class="s2">What language do you want to use?? [ </span><span class="s5">ObjC</span><span class="s2"> / Swift ]</span></p>
+            <p class="p5"><span class="s2"><span class="Apple-converted-space"> </span>&gt;<span class="Apple-converted-space"> </span></span></p>
+            <p class="p6"><span class="s2"></span>objc<br></p>
+            <p class="p1"><span class="s2">Would you like to include a demo application with your library? [ </span><span class="s5">Yes</span><span class="s2"> / No ]</span></p>
+            <p class="p5"><span class="s2"><span class="Apple-converted-space"> </span>&gt;<span class="Apple-converted-space"> </span></span></p>
+            <p class="p6"><span class="s2">yes</span></p>
+            <p class="p1"><span class="s2">Which testing frameworks will you use? [ </span><span class="s5">Specta</span><span class="s2"> / Kiwi / None ]</span></p>
+            <p class="p5"><span class="s2"><span class="Apple-converted-space"> </span>&gt;<span class="Apple-converted-space"> </span></span></p>
+            <p class="p6"><span class="s2">specta</span></p>
+            <p class="p1"><span class="s2">Would you like to do view based testing? [ </span><span class="s5">Yes</span><span class="s2"> / No ]</span></p>
+            <p class="p5"><span class="s2"><span class="Apple-converted-space"> </span>&gt;<span class="Apple-converted-space"> </span></span></p>
+            <p class="p6"><span class="s2">yes</span></p>
+            <p class="p1"><span class="s2">What is your class prefix?</span></p>
+            <p class="p5"><span class="s2"><span class="Apple-converted-space"> </span>&gt; </span><span class="s4">PY</span></p>
+            <p class="p2"><span class="s2"></span><br></p>
+            <p class="p1"><span class="s2">Running </span><span class="s7">pod install</span><span class="s2"> on your new library.</span></p>
+            <p class="p2"><span class="s2"></span><br></p>
+            <p class="p1"><span class="s2">Analyzing dependencies</span></p>
+            <p class="p2"><span class="s2"></span><br></p>
+            <p class="p5"><span class="s2">CocoaPods 0.38.0.beta.1 is available.</span></p>
+            <p class="p5"><span class="s2">To update use: `gem install cocoapods --pre`</span></p>
+            <p class="p6"><span class="s2">[!] This is a test version we'd love you to try.</span></p>
+            <p class="p2"><span class="s2"></span><br></p>
+            <p class="p5"><span class="s2">For more information see http://blog.cocoapods.org</span></p>
+            <p class="p5"><span class="s2">and the CHANGELOG for this version http://git.io/BaH8pQ.</span></p>
+            <p class="p2"><span class="s2"></span><br></p>
+            <p class="p1"><span class="s2">Fetching podspec for `Piyo` from `../`</span></p>
+            <p class="p1"><span class="s2">Downloading dependencies</span></p>
+            <p class="p5"><span class="s2">Installing Expecta (1.0.0)</span></p>
+            <p class="p5"><span class="s2">Installing Expecta+Snapshots (1.3.4)</span></p>
+            <p class="p5"><span class="s2">Installing FBSnapshotTestCase (1.8.1)</span></p>
+            <p class="p5"><span class="s2">Installing Piyo (0.1.0)</span></p>
+            <p class="p5"><span class="s2">Installing Specta (1.0.2)</span></p>
+            <p class="p1"><span class="s2">Generating Pods project</span></p>
+            <p class="p1"><span class="s2">Integrating client project</span></p>
+            <p class="p2"><span class="s2"></span><br></p>
+            <p class="p5"><span class="s2">[!] Please close any current Xcode sessions and use `Piyo.xcworkspace` for this project from now on.</span></p>
+            <p class="p2"><span class="s2"></span><br></p>
+            <p class="p1"><span class="s2"><span class="Apple-converted-space"> </span>Ace! you're ready to go!</span></p>
+            <p class="p1"><span class="s2"><span class="Apple-converted-space"> </span>We will start you off by opening your project in Xcode</span></p>
+            <p class="p4"><span class="s4"><span class="Apple-converted-space">  </span></span><span class="s2">open 'Piyo/Example/Piyo.xcworkspace'</span></p>
+            <p class="p2"><span class="s2"></span><br></p>
+            <p class="p1"><span class="s2">To learn more about the template see `https://github.com/CocoaPods/pod-template.git`.</span></p>
+            <p class="p1"><span class="s2">To learn more about creating a new pod, see `http://guides.cocoapods.org/making/making-a-cocoapod`.</span></p>
+          </div>
+        </script></section>
+
+        <section data-markdown><script type="text/template">
+          ### テンプレートから作成
+
+          こんな感じのファイル群が生成される。
+
+          <pre class="filetree">
+          Piyo/
+          ├ .git/
+          ├ .gitignore
+          ├ .travis.yml
+          ├ _Pods.xcodeproj
+          ├ Example/
+          │ ├ Piyo/
+          │ ├ Piyo.xcodeproj
+          │ ├ Piyo.xcworkspace
+          │ ├ Podfile
+          │ ├ Podfile.lock
+          │ ├ Pods/
+          │ └ Tests/
+          ├ LICENSE         <span class="eyecatch fragment">← MIT Licenseになってた</span>
+          ├ Piyo.podspec
+          ├ Pod/
+          │ ├ Assets/
+          │ └ Classes/
+          └ README.md
+          </pre>
+        </script></section>
+
+        <section data-markdown><script type="text/template">
+          ### Podspec
+
+          Piyo.podspec
+
+          ```ruby
+          Pod::Spec.new do |s|
+            s.name = "Piyo"
+            s.version = "0.1.0"
+            s.summary = "A short description of Piyo."
+            s.description = <<-DESC
+              An optional longer description of Piyo
+
+              * Markdown format.
+              * Don`t worry about the indent, we strip it!
+            DESC
+            s.homepage = "https://github.com/<GITHUB_USERNAME>/Piyo"
+            # s.screenshots = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
+            s.license = 'MIT'
+            s.author = { "Hironori Ichimiya" => "hiron@hironytic.com" }
+            s.source = { :git => "https://github.com/<GITHUB_USERNAME>/Piyo.git", :tag => s.version.to_s }
+            # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+
+            s.platform     = :ios, '7.0'
+            s.requires_arc = true
+
+            s.source_files = 'Pod/Classes/**/*'
+            s.resource_bundles = {
+              'Piyo' => ['Pod/Assets/*.png']
+            }
+
+            # s.public_header_files = 'Pod/Classes/**/*.h'
+            # s.frameworks = 'UIKit', 'MapKit'
+            # s.dependency 'AFNetworking', '~> 2.3'
+          end
+          ```
+        </script></section>
+
+        <section data-markdown><script type="text/template">
+          ### Podのバージョンの付け方
+
+          [Semantic Versioning](http://semver.org/) に従って付ける。
+
+          X.Y.Z （例：1.0.4）
+
+          - X: メジャーバージョン
+            - APIに互換性がなくなったら上げる
+          - Y: マイナーバージョン
+            - APIの後方互換を保った機能追加で上げる
+          - Z: パッチバージョン
+            - APIの後方互換を保ったバグフィックスで上げる
+        </script></section>
+
+        <section data-markdown><script type="text/template">
+          ### Podの開発中
+
+          Podfileに `:path` を付けると開発中のPodを参照できる。
+
+          <pre class="filetree">
+          Piyo/
+          ├ Example/
+          │ │ :
+          │ └ Podfile  <span class="eyecatch">← これ</span>
+          ├ LICENSE
+          ├ Piyo.podspec
+          ├ Pod/
+          └ README.md
+          </pre>
+
+          <small>※ Piyo/Example/Podfile</small>
+
+          ```ruby
+          pod "Piyo", :path => "../"
+          ```
+        </script></section>
+
+        <section data-markdown><script type="text/template">
+          ### リリース
+
+          1. Podの検証
+             ```sh
+             $ pod lib lint
+             ```
+          1. タグを作って自分のリポジトリへプッシュ<br>
+             podspecの `s.source =` で指定したリポジトリ／タグ
+             ```ruby
+               :
+             s.version = "0.1.0"
+               :
+             s.source = { :git => "https://github.com/<GITHUB_USERNAME>/Piyo.git", :tag => s.version.to_s }
+               :
+             ```
+          1. Specs repoへプッシュ
+             ```sh
+             $ pod trunk push Piyo.podspec
+             ```
+        </script></section>
+
+        <section data-markdown><script type="text/template">
+          ## おまけ
+        </script></section>
+
+        <section data-markdown><script type="text/template">
+          ### Private Pods
+
+          - オープンじゃないPod
+          - 社内ライブラリとか
+          - 利用方法
+            - https://guides.cocoapods.org/making/private-cocoapods.html 参照
+            - というか、使ってみたことがないのです。<br>いつか利用してみたら、また報告します。 <!-- .element: class="fragment" -->
+        </script></section>
+
+        <section data-markdown><script type="text/template">
+          ### Carthage（カルタゴ）
+
+          https://github.com/Carthage/Carthage
+
+          - CocoaPodsのライバル
+          - CocoaPodsとの違い
+            - Specs Repoに相当するものがない
+            - podspecのようなメタデータファイルがない
+            - 基本はDynamic Frameworkを使う方式なのでiOS 8以降のみに対応 → 今後普及するはず
+          - というか、使ってみたことがないのです。<br>いつか利用してみたら、また報告します。 <!-- .element: class="fragment" -->
+        </script></section>
+
+        <section data-markdown><script type="text/template">
+          ありがとうございました。
+        </script></section>
+      </div>
     </div>
 
     <script src="../../lib/js/head.min.js"></script>
