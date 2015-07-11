@@ -82,6 +82,10 @@
           - Node.jsでいうところのnpm
         </script></section>
 
+        <section>
+          <p><img src="admob.png" width="85%"></p>
+        </section>
+
         <section data-markdown><script type="text/template">
           ### Gettig Started - はじめよう
 
@@ -128,6 +132,10 @@
         <section data-markdown><script type="text/template">
           ### Podfileの作成
 
+          使いたいPodを記述する。
+
+          空のファイルから作ってもいいが、<br>便利なコマンドも
+
           ```sh
           $ pod init
           ```
@@ -148,44 +156,42 @@
           </pre>
         </script></section>
 
-        <section>
-          <section data-transition="fade" data-markdown><script type="text/template">
-            ### Podfile
+        <section data-transition="slide-in fade-out" data-markdown><script type="text/template">
+          ### Podfile
 
-            こんなのができてる。
+          こんなのができてる。
 
-            ```ruby
-            # Uncomment this line to define a global platform for your project
-            # platform :ios, '6.0'
+          ```ruby
+          # Uncomment this line to define a global platform for your project
+          # platform :ios, '6.0'
 
-            target 'HogeFuga' do
+          target 'HogeFuga' do
 
-            end
+          end
 
-            target 'HogeFugaTests' do
+          target 'HogeFugaTests' do
 
-            end
-            ```
-          </script></section>
-          <section data-transition="fade" data-markdown><script type="text/template">
-            ### Podfile
+          end
+          ```
+        </script></section>
+        <section data-transition="fade-in slide-out" data-markdown><script type="text/template">
+          ### Podfile
 
-            使いたいPodを記述する。
+          使いたいPodを記述する。
 
-            ```ruby
-            # Uncomment this line to define a global platform for your project
-            platform :ios, '8.0'
+          ```ruby
+          # Uncomment this line to define a global platform for your project
+          platform :ios, '8.0'
 
-            target 'HogeFuga' do
-              pod 'BFTaskPromise', '~> 2.0'
-            end
+          target 'HogeFuga' do
+            pod 'BFTaskPromise', '~> 2.0'
+          end
 
-            target 'HogeFugaTests' do
+          target 'HogeFugaTests' do
 
-            end
-            ```
-          </script></section>
-        </section>
+          end
+          ```
+        </script></section>
 
         <section data-markdown><script type="text/template">
           #### メモ：バージョンの指定
@@ -275,6 +281,28 @@
         <section data-markdown><script type="text/template">
           ### Podfile.lock
 
+          `pod install` で作られたファイル
+
+          <pre class="filetree">
+          HogeFuga/
+            ├ HogeFuga/
+            │  ├ AppDelegate.h
+            │  ├ AppDelegate.m
+            │  │  :
+            ├ HogeFugaTests/
+            │  ├ HogeFugaTests.m
+            │  │  :
+            ├ HogeFuga.xcodeproj
+            ├ HogeFuga.xcworkspace  <span class="eyecatch">← 増えた</span>
+            ├ Podfile
+            ├ Podfile.lock   <span class="eyecatch">← 増えた</span>
+            └ Pods/   <span class="eyecatch">← 増えた</span>
+          </pre>
+        </script></section>
+
+        <section data-markdown><script type="text/template">
+          ### Podfile.lock
+
           ```yaml
           PODS:
             - BFTaskPromise (2.1.0):
@@ -303,11 +331,33 @@
 
           - インストールされたPodのバージョンが書かれている。
           - `pod install` しても、ライブラリのバージョンが勝手に上がったりはしない。
-            - 更新したければ？
-              ```sh
-                $ pod update [POD_NAMES ...]
-              ```
           - Podfile.lockはソース管理（git）に追加しよう！
+          - バージョンを更新したければ？ <!-- .element: class="fragment" -->
+            ```sh
+              $ pod update [POD_NAMES ...]
+            ```
+        </script></section>
+
+        <section data-markdown><script type="text/template">
+          ### Pods
+
+          `pod install` で作られたファイル
+
+          <pre class="filetree">
+          HogeFuga/
+            ├ HogeFuga/
+            │  ├ AppDelegate.h
+            │  ├ AppDelegate.m
+            │  │  :
+            ├ HogeFugaTests/
+            │  ├ HogeFugaTests.m
+            │  │  :
+            ├ HogeFuga.xcodeproj
+            ├ HogeFuga.xcworkspace  <span class="eyecatch">← 増えた</span>
+            ├ Podfile
+            ├ Podfile.lock   <span class="eyecatch">← 増えた</span>
+            └ Pods/   <span class="eyecatch">← 増えた</span>
+          </pre>
         </script></section>
 
         <section data-markdown><script type="text/template">
@@ -350,11 +400,11 @@
         </script></section>
 
         <section data-markdown><script type="text/template">
-          ## Pod（ライブラリ）の作り方
+          ## Podの作り方
         </script></section>
 
         <section data-markdown><script type="text/template">
-          ‥‥その前に
+          ‥‥その前に準備を
         </script></section>
 
         <section data-markdown><script type="text/template">
@@ -380,7 +430,7 @@
         </script></section>
 
         <section data-markdown><script type="text/template">
-          ## Pod（ライブラリ）の作り方
+          ## Podの作り方
         </script></section>
 
         <section data-markdown><script type="text/template">
@@ -391,14 +441,14 @@
           - LICENSEファイル
         </script></section>
 
-        <section data-markdown><script type="text/template">
-          ### テンプレートから作成
+        <section>
+          <h3>テンプレートから作成</h3>
 
-          質問に答えていくと、Podの種を作ってくれる。
+          <p>質問に答えていくと、Podの種を作ってくれる。</p>
 
-          ```sh
+          <pre><code data-trim class="sh">
           $ pod lib create [pod name]
-          ```
+          </code></pre>
 
           <small class="fragment">↓ 実は初めて実行してみた😓</small>
 
@@ -465,7 +515,7 @@
             <p class="p1"><span class="s2">To learn more about the template see `https://github.com/CocoaPods/pod-template.git`.</span></p>
             <p class="p1"><span class="s2">To learn more about creating a new pod, see `http://guides.cocoapods.org/making/making-a-cocoapod`.</span></p>
           </div>
-        </script></section>
+        </section>
 
         <section data-markdown><script type="text/template">
           ### テンプレートから作成
@@ -551,7 +601,7 @@
         <section data-markdown><script type="text/template">
           ### Podの開発中
 
-          Podfileに `:path` を付けると開発中のPodを参照できる。
+          Podfileに `:path` を付けると<br>開発中のPodをインストールできる。
 
           <pre class="filetree">
           Piyo/
@@ -615,13 +665,13 @@
           - CocoaPodsのライバル
           - CocoaPodsとの違い
             - Specs Repoに相当するものがない
-            - podspecのようなメタデータファイルがない
+            - workspaceを強制しない
             - 基本はDynamic Frameworkを使う方式なのでiOS 8以降のみに対応 → 今後普及するはず
           - というか、使ってみたことがないのです。<br>いつか利用してみたら、また報告します。 <!-- .element: class="fragment" -->
         </script></section>
 
         <section data-markdown><script type="text/template">
-          ありがとうございました。
+          以上、CocoaPodsのはなしでした。
         </script></section>
       </div>
     </div>
